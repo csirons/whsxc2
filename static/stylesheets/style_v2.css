@@ -1,0 +1,461 @@
+/* meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/ */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td { margin: 0; padding: 0; border: 0; outline: 0; font-weight: inherit; font-style: inherit; font-size: 100%; font-family: inherit;  } body { line-height: 1; color: black; background: white; } table { border-collapse: separate; border-spacing: 0; } caption, th, td { text-align: left; font-weight: normal; } blockquote:before, blockquote:after, q:before, q:after { content: ""; } blockquote, q { quotes: "" ""; }
+/* reset done */
+
+body {
+  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  margin-bottom: 50px;
+}
+
+#title {
+  color: #0000ec;
+  font-family: "Georgia", "Garamond", serif;
+  margin: auto;
+  max-width: 800px;
+  padding: 20px 0 30px;
+  text-align: center;
+}
+#title span {
+  background-image: url('/static/mascot.png');
+  background-repeat: no-repeat;
+  display: block;
+  text-transform: uppercase;
+}
+#title-school {
+  background-position: 100% 5px;
+  font-size: 45px;
+  line-height: 45px;
+  padding: 0 90px 72px;
+}
+#title-crosscountry {
+  background-position: 0% 5px;
+  font-size: 72px;
+  line-height: 57px;
+  margin-top: -117px;
+  padding: 45px 90px 0;
+}
+
+#content {
+  margin: auto;
+  max-width: 780px;
+}
+
+#navigation-menu {
+  list-style-type: none;
+  padding: 0 0 1.5em;
+  text-align: center;
+}
+#navigation-menu li {
+  display: inline;
+  margin: 0 .3em;
+}
+#navigation-menu a {
+  background-color: navy;
+  color: white;
+  padding: 3px 5px 3px;
+  text-decoration: none;
+}
+
+.meet-date {
+  font-size: .875em;
+  margin-left: 2em;
+}
+
+a { color: #0000ec; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+abbr {
+  border-bottom: 1px dotted;
+}
+
+dt {
+  float: left;
+  font-weight: bold;
+  margin-right: 1em;
+}
+dt:after {
+  content: ":";
+}
+
+h1 {
+  color: navy;
+  font-size: 28px;
+  line-height: 1.5em;
+}
+
+h2 {
+  clear: both;
+  color: navy;
+  font-size: 20px;
+  line-height: 1em;
+  padding: .75em 0 .5em;
+}
+h1+h2 { padding-top: .5em; }
+table+h2 {
+  padding-top: 1.5em;
+}
+
+h3 {
+  font-weight: bold;
+}
+
+img { border: 1px solid black; }
+
+p {
+  padding-bottom: 1.5em;
+}
+p.meet-meta , p.runner-meta {
+  padding-bottom: 0;
+  font-size: 13px;
+}
+p.race-meta {
+  font-size: 13px;
+}
+p.meet-meta b , p.race-meta b {
+  margin-right: .7em;
+}
+strong { font-weight: bold; }
+
+table {
+  width: 100%;
+}
+table.meet {
+  margin-top: -1.5em;
+}
+tr td {
+  border-top: 1px solid #E9E9E9;
+}
+th {
+  font-weight: normal;
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 16px;
+  height: 16px;
+  font-size: 10px;
+}
+th a {
+  color: black;
+}
+th.selected a {
+   color: #0000ec;
+}
+td {
+  padding: 4px 0px;
+  line-height: 18px;
+  font-size: 13px;
+  text-align: center;
+}
+td.name, th.name, td.meet, th.meet, td.location, th.location, td.date, th.date {
+  text-align: left;
+}
+td.name, td.meet {
+  font-size: 14px;
+}
+
+td.col-start {
+  border-left: 4px solid #fff;
+}
+
+.top10 h2 {
+  clear: both;
+}
+
+.disclaimer {
+  font-size: .9em;
+  line-height: 1.667em;
+  margin-top: 1.667em;
+  text-align: right;
+}
+ul, ol, dl {
+  padding-bottom: 1.5em;
+}
+ul, ol {
+  padding-left: 1.5em;
+}
+
+.dates dt {
+  font-weight: normal;
+  margin-right: 0;
+  width: 5em;
+}
+.dates dt:after {
+  content: '';
+}
+.dates dd {
+  padding-left: 5em;
+}
+
+p.blog-meta {
+  color: #666;
+  font-size: .9em;
+  margin-top: -.5em;
+  padding-bottom: 0;
+  margin-bottom: 5px;
+  border-bottom: 1px solid #E9E9E9;
+}
+p.blog-archives {
+  border-top: 1px solid;
+  color: #666;
+  margin-top: 1em;
+  padding-top: .5em;
+}
+
+div.grade-list {
+  border-top: 1px solid #E9E9E9;
+}
+div.grade-list h3 {
+  float: left;
+  width: 100px;
+  clear: both;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.grade-list:before,
+.grade-list:after {
+    content:"";
+    display:table;
+}
+.grade-list:after {
+    clear:both;
+}
+.grade-list {
+    zoom:1; /* For IE 6/7 (trigger hasLayout) */
+}
+.girls-list, .boys-list {
+  float: left;
+  padding-bottom: 1.5em;
+  width: 47%;
+}
+.boys-list {
+  float: right;
+  width: 47%;
+}
+
+.schedule .girls-list {
+  width: 35%;
+}
+.schedule .girls-list {
+  width: 40%;
+}
+
+.grade-list .meet-date {
+  color: #777;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+.grade-list td {
+  border: 0;
+}
+
+.runners ul {
+  list-style-type: none;
+}
+.runners .girls-list {
+  width: 38%;;
+}
+.runners .boys-list {
+  width: 39%;;
+}
+
+
+.schedule {
+  list-style-type: none;
+  padding: 1em 0 0;
+}
+.schedule h2 {
+  padding: 0.5em 0 0.5em;
+}
+.schedule .past_tense h2 {
+  font-size: 14px;
+  margin: 0;
+  padding: 0.5em 0;
+}
+
+.map {
+  float: right;
+  margin-left: 15px;
+  margin-bottom: 1.5em;
+}
+.map img {
+  display: block;
+  border: 1px solid #AAA;
+  margin: auto;
+}
+a.map, .big-map > a {
+  font-size: 10px;
+  text-transform: uppercase;
+  text-align: center;
+}
+.big-map {
+  display: block;
+  margin-bottom: 1.5em;
+  text-align: center;
+}
+.big-map .directions-map.sized {
+  border: 1px solid #AAA;
+  width: 100%;
+  height: 400px;
+}
+
+.course-map.sized {
+  border: 1px solid #AAA;
+  height: 400px;
+  width: 100%;
+}
+.course-elevation.sized {
+  border: 1px solid #AAA;
+  border-width: 0;
+  height: 95px;
+  margin: 20px -10px 1.5em;
+}
+
+td.badges {
+  padding: 0;
+  border-top-color: #FFF;
+}
+td.badges div {
+  margin: 0 -116px 0 5px;
+  width: 116px;
+  text-align: left;
+}
+.pr, .pr-course, .sb {
+  background-color: #0000ec;
+  border: 0;
+  color: white;
+  display: inline-block;
+  font-size: 10px;
+  line-height: 12px;
+  min-width: 24px;
+  padding: 2px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  text-align: center;
+}
+.pr-course {
+  background-color: #666;
+}
+.sb {
+  background-color: #66c;
+}
+.all-time-rank, .course-rank, .grade-rank {
+  background: gold;
+  color: #444;
+  border: 0;
+  font-size: 10px;
+  font-style: italic;
+  display: inline-block;
+  line-height: 12px;
+  min-width: 72px;
+  padding: 2px 3px;
+  text-align: center;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.grade-rank {
+  background: silver;
+}
+.course-rank {
+  background: #A67D3D;
+  color: #FFF;
+}
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  body {
+    font-size: 10pt;
+    line-height: 16pt;
+    margin: 0.3in 0.5in 0 !important;
+    padding-top: 0.00in;
+  }
+
+  #title {
+    display: none;
+  }
+  #navigation-menu {
+    display: none;
+  }
+  .meet-meta, .runner-meta {
+    display: none;
+  }
+
+  a {
+    color: black;
+  }
+  h1 {
+    color: black;
+  }
+  h2 {
+    color: black;
+    padding-top: 0.5em;
+  }
+  th.selected a {
+    color: black;
+  }
+
+  h1 {
+    font-size: 15px;
+  }
+  h2 {
+    font-size: 13px;
+    padding-top: .9em;
+  }
+  .schedule .past_tense h2 {
+    font-size: 11px;
+  }
+  .schedule .past_tense a {
+    display: none;
+  }
+  p.race-meta {
+    font-weight: normal;
+    font-size: 10px;
+  }
+  p.race-meta b {
+    font-weight: normal;
+  }
+
+  tr td {
+    nborder-top: 0;
+    padding: 0px 0px;
+    font-size: 9pt;
+    line-height: 16pt;
+  }
+  tr td.meet , tr td.name {
+    font-size: 9pt;
+  }
+  td.col-start {
+    border-left: 0;
+  }
+  th.ranks, td.ranks {
+    display: none;
+  }
+  th {
+    font-weight: bold;
+    height: 1em;
+    overflow: hidden;
+  }
+
+  .pr, .pr-course, .sb {
+    background-color: transparent;
+    color: #000;
+  }
+
+  .toc, .map, .big-map, .course-map, .meet-date, .address, .directions-container, .meets-container {
+    display: none;
+  }
+
+  .screen-only {
+    display: none;
+  }
+  .print-only {
+    display: inline;
+  }
+}

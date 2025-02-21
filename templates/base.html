@@ -1,0 +1,19 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>{% block title %}{% endblock %} &ndash; Widefield High School Running</title>
+		<link href="{% static 'stylesheets/style_v2.css' %}" rel="Stylesheet" type="text/css" />
+	</head>
+	<body>
+		<div id="title"><span id="title-school">Widefield High School</span> <span id="title-crosscountry">Cross Country</span></div>
+		<div id="content">
+			{% load simplemenus %}
+			{% flatmenu 'navigation' %}
+			{% block content %} default content {% endblock %}
+		</div>
+	</body>
+</html>
+

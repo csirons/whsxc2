@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Widefield High School Cross Country{% endblock title %}
+
+{% block content %}
+  <h1>Widefield High School Cross Country Team Blog</h1>
+  {% for entry in latest %}
+    <h2> {{ entry.title|safe }} </h2>
+		<p class="blog-meta">{{ entry.created_at|date:"l, F jS, Y" }}</p>
+    {{ entry.text|safe|linebreaks }}
+  {% endfor %}
+
+	<p class="blog-archives">
+	Full archives: 
+	{% for date in date_list reversed %}
+	<a href="blog/{{ date|date:"Y" }}.html">{{ date|date:"Y" }}</a>{% if not forloop.last %},{% endif %}
+	{% endfor %}
+	</p>
+{% endblock %}
