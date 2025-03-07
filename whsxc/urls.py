@@ -31,6 +31,7 @@ urlpatterns = [
     path('',views.homepage),
     path('runners/',views.runners),
     path('meets/',views.meets),
+    path('history/', views.history),
     
     path( "archive/",
         views.index,

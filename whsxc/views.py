@@ -27,3 +27,9 @@ def meets(request):
             "latest": Entry.objects.all().order_by("-created_at")[:5],
             #datelist:
         },)
+
+def history(request):
+    return render(request, 'history/history.html', {
+            "latest": Entry.objects.all().order_by("-created_at")[:5],
+            #datelist:
+        },)
