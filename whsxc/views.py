@@ -15,3 +15,15 @@ def index(request):
             "latest": Entry.objects.all().order_by("-created_at")[:5],
             #datelist:
         },)
+
+def runners(request):
+    return render(request, 'runners/runners.html', {
+            "latest": Entry.objects.all().order_by("-created_at")[:5],
+            #datelist:
+        },)
+
+def meets(request):
+    return render(request, 'meets/meets.html', {
+            "latest": Entry.objects.all().order_by("-created_at")[:5],
+            #datelist:
+        },)

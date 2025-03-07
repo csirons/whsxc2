@@ -29,6 +29,8 @@ from . import views
 urlpatterns = [
     path("admin/", admin.site.urls),  
     path('',views.homepage),
+    path('runners/',views.runners),
+    path('meets/',views.meets),
     
     path( "archive/",
         views.index,
