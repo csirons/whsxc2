@@ -32,10 +32,12 @@ urlpatterns = [
     path('runners/',views.runners),
     path('meets/',views.meets),
     path('history/', views.history),
+    path('archive/', views.archive),
+    path('schedule/', views.schedule),
     
-    path( "archive/",
-        views.index,
-        name="blogindex"),
+    #path( "archive/",
+    #    views.index,
+    #    name="blogindex"),
 ]
  
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

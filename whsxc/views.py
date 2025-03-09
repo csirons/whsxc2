@@ -9,8 +9,7 @@ def homepage(request):
             #datelist:
         },)
 
-
-def index(request):
+def archive(request):
     return render(request, "blog/entry_archive.html",  {
             "latest": Entry.objects.all().order_by("-created_at")[:5],
             #datelist:
@@ -30,6 +29,12 @@ def meets(request):
 
 def history(request):
     return render(request, 'history/history.html', {
+            "latest": Entry.objects.all().order_by("-created_at")[:5],
+            #datelist:
+        },)
+
+def schedule(request):
+    return render(request, 'schedule/schedule.html', {
             "latest": Entry.objects.all().order_by("-created_at")[:5],
             #datelist:
         },)
