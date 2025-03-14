@@ -38,3 +38,21 @@ def schedule(request):
             "latest": Entry.objects.all().order_by("-created_at")[:5],
             #datelist:
         },)
+
+def homemeet(request):
+    return render(request, 'homemeet/homemeet.html', {
+            "latest": Entry.objects.all().order_by("-created_at")[:5],
+            #datelist:
+        },)
+
+def runninglinks(request):
+    return render(request, 'runninglinks/runninglinks.html', {
+            "latest": Entry.objects.all().order_by("-created_at")[:5],
+            #datelist:
+        },)
+
+def summerrunning(request):
+    return render(request, 'summerrunning/summerrunning.html', {
+            "latest": Entry.objects.all().order_by("-created_at")[:5],
+            #datelist:
+        },)

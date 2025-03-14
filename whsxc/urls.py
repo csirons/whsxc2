@@ -34,6 +34,9 @@ urlpatterns = [
     path('history/', views.history),
     path('archive/', views.archive),
     path('schedule/', views.schedule),
+    path('homemeet/', views.homemeet),
+    path('runninglinks/', views.runninglinks),
+    path('summerrunning/info/', views.summerrunning),
     
     #path( "archive/",
     #    views.index,

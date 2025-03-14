@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     "meets",
     "history",
     "schedule",
+    "homemeet",
+    "runninglinks",
+    "summerrunning",
     "simplemenu"
 ]
 
