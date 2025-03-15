@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load crosscountry_extras %}
 
 {% block title %}Runners{% endblock title %}
 
@@ -9,10 +9,19 @@
       <h2>{{ year }}</h2>
       {% get_dict_value year from runners_by_year as runners %}
       <div class="runners">
-        
+        {% sectionbyattribute 'grade' runners %}
+          <div class="grade-list">
+            <h3 style="">{{ grade.grade|grade_name_plural }}</h3>
+            {% sectionbyattribute 'gender' grade.runners %}
+            <ul class="{{ gender.gender|gender_name|lower }}-list">
+                {% for runner in gender.grade_runners %}
+                <li><a href="{{ runner.get_absolute_url }}">{{ runner.name }}</a></li>
+              {% endfor %}
+              </ul>
+            {% endsectionbyattribute %}
           </div>
         {% endsectionbyattribute %}
       </div>
-	  
     {% endfor %}
 {% endblock %}
+
