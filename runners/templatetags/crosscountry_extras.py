@@ -94,15 +94,15 @@ register.filter('ifnotnull',ifnotnull)
 
 def list_runs(females, males, hide_date=None):
   return { 'female_runs': females, 'male_runs': males, 'hide_date': hide_date }
-register.inclusion_tag('crosscountry/runs_list.html')(list_runs)
+register.inclusion_tag('runners/runs_list.html')(list_runs)
 
 def runs_list(females, males, title):
   return { 'female_runs': females, 'male_runs': males, 'title': title }
-register.inclusion_tag('crosscountry/_runs_list.html')(runs_list)
+register.inclusion_tag('runners/_runs_list.html')(runs_list)
 
 def meets_list(meets, show_year=None):
   return { 'meets': meets, 'show_year': show_year }
-register.inclusion_tag('crosscountry/_meets_list.html')(meets_list)
+register.inclusion_tag('runners/_meets_list.html')(meets_list)
 
 def load_runs(parser,token):
    return LoadRunsNode()

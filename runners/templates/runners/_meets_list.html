@@ -1,0 +1,72 @@
+{% load crosscountry_extras %}
+{% load humanize %}
+
+<table class="meet">
+  {% with meets|have_team_place as have_team_place %}
+  {% with meets|have_top_finish as have_top_finish %}
+  {% with meets|have_pack_time as have_pack_time %}
+  <tr>
+    <th width="37%"></th>
+    <th width="18%"></th>
+    <th width="15%" colspan="2">
+      {% if have_team_place %}
+      Team Finish
+      {% endif %}
+    </th>
+    <th width="15%" colspan="2">
+      {% if have_top_finish %}
+      Top Finish
+      {% endif %}
+    </th>
+    <th width="15%" colspan="2">
+      {% if have_pack_time %}
+      Pack time
+      {% endif %}
+    </th>
+  </tr>
+  <tr valign="bottom">
+    <th width="37%" class="name">Meet</th>
+    <th class="date">Date</th>
+    {% if have_team_place %}
+      <th>Female</th>
+      <th>Male</th>
+    {% else %}
+      <th></th>
+      <th></th>
+    {% endif %}
+    {% if have_top_finish %}
+      <th>Female</th>
+      <th>Male</th>
+    {% else %}
+      <th></th>
+      <th></th>
+    {% endif %}
+    {% if have_pack_time %}
+      <th>Female</th>
+      <th>Male</th>
+    {% else %}
+      <th></th>
+      <th></th>
+    {% endif %}
+  </tr>
+  {% endwith %}
+  {% endwith %}
+  {% endwith %}
+  {% for meet in meets %}
+  <tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
+    <td class="name">
+      <a href="{{ meet.get_absolute_url }}">
+          {% if meet.name %} {{ meet.name }} {% else %} {{ meet.occurred_at|date:"F jS, Y" }} {% endif %}
+          {% if show_year %}({{ meet.year }}){% endif %}
+      </a>
+    </td>
+    <td class="date">{{ meet.occurred_at|date:"F jS, Y" }}</td>
+    <td class="col-start">{% if meet.team_place_female %}{{ meet.team_place_female|ordinal }}{% endif %}</td>
+    <td>{% if meet.team_place_male %}{{ meet.team_place_male|ordinal }}{% endif %}</td>
+    <td class="col-start">{% if meet.top_finish_female %}{{ meet.top_finish_female|ordinal }}{% endif %}</td>
+    <td>{% if meet.top_finish_male %}{{ meet.top_finish_male|ordinal }}{% endif %}</td>
+    <td class="col-start">{% if meet.pack_time_female %}{{ meet.pack_time_female|ifnotnull|convert_seconds }}{% endif %}</td>
+    <td>{% if meet.pack_time_male %}{{ meet.pack_time_male|ifnotnull|convert_seconds }}{% endif %}</td>
+  </tr>
+  {% endfor %}
+</table>

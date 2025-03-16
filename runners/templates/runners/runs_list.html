@@ -1,0 +1,31 @@
+{% load crosscountry_extras %}
+<div class="girls-list">
+	<h3>Girls</h3>
+	<table>
+		{% for run in female_runs %}
+    <tr>
+      <td width="30" class="name">{{ forloop.counter}}</td>
+      <td width="180" class="name"><a href="{{ run.runner.get_absolute_url }}">{{ run.runner.name }}</a></td>
+      <td>{% if run.best_time %}{{ run.best_time|convert_seconds }}{% else %}{{ run.final_time|convert_seconds }}{% endif %}</td>
+      {% if not hide_date %}
+        <td><span class="meet-date">(<a href="{{ run.meet.get_absolute_url }}">{{ run.occurred_at|date:"j-M-Y" }}</a>)</span></td>
+      {% endif %}
+    </tr>
+		{% endfor %}
+	</table>
+</div>
+<div class="boys-list">
+	<h3>Boys</h3>
+  <table>
+		{% for run in male_runs %}
+    <tr>
+      <td width="30" class="name">{{ forloop.counter}}</td>
+      <td width="180" class="name"><a href="{{ run.runner.get_absolute_url }}">{{ run.runner.name }}</a></td>
+      <td>{% if run.best_time %}{{ run.best_time|convert_seconds }}{% else %}{{ run.final_time|convert_seconds }}{% endif %}</td>
+      {% if not hide_date %}
+        <td><span class="meet-date">(<a href="{{ run.meet.get_absolute_url }}">{{ run.occurred_at|date:"j-M-Y" }}</a>)</span></td>
+      {% endif %}
+    </tr>
+		{% endfor %}
+  </table>
+</div>
