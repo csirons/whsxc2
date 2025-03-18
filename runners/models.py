@@ -140,7 +140,7 @@ class MeetManager(models.Manager):
   def years(self):
     from django.db import connection
     cursor = connection.cursor()
-    cursor.execute("SELECT strftime('%%Y',occurred_at) FROM crosscountry_meet GROUP BY strftime('%%Y', occurred_at) ORDER BY occurred_at asc;")
+    cursor.execute("SELECT strftime('%Y',occurred_at) FROM crosscountry_meet GROUP BY strftime('%Y', occurred_at) ORDER BY occurred_at asc;")
     result_list = []
     for row in cursor.fetchall():
       result_list.append(row[0])

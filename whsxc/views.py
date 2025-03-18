@@ -28,21 +28,20 @@ def runners(request):
         if len(runners) > 0:
             runners_by_year[year] = runners
             actual_years.append(year)
-    #actual_years =['2002', '2001', '2000']  # Example data for testing, replace with actual years from the database
-    #runners_by_year={'2000': ['Bob', 'Alice'], '2001': ['Charlie'], '2002': ['David']}  # Example data for testing
+
     return render(request,'runners/runners.html', {
         "runners_by_year": runners_by_year,  # Sort years in descending order
         "years": actual_years,
          },)
-    #return render(request, 'runners/runners.html', {
-    #        "years_list": MeetManager.years('self'),  # Assuming MeetManager has a method to get years
-    #        #datelist:
-    #    },)
+
 
 def meets(request):
+    now = datetime.datetime.now()
+    meets = Meet.objects.filter(occurred_at__lte=now).select_related().order_by('-occurred_at')
+    #return direct_to_template(request, 'crosscountry/meets_list.html', { 'meets': meets })
+    
     return render(request, 'meets/meets.html', {
-            "latest": Entry.objects.all().order_by("-created_at")[:5],
-            #datelist:
+        'meets': meets, 
         },)
 
 def history(request):

@@ -1,19 +1,12 @@
 {% extends "base.html" %}
+{% load crosscountry_extras %}
 
-{% block title %}Widefield High School Cross Country{% endblock title %}
+{% block title %}List of Meets{% endblock title %}
 
 {% block content %}
-  <h1>Widefield High School Cross Country Team Blog</h1>
-  {% for entry in latest %}
-    <h2> {{ entry.title|safe }} </h2>
-		<p class="blog-meta">{{ entry.created_at|date:"l, F jS, Y" }}</p>
-    {{ entry.text|safe|linebreaks }}
-  {% endfor %}
-
-	<p class="blog-archives">
-	Full archives: 
-	{% for date in date_list reversed %}
-	<a href="blog/{{ date|date:"Y" }}.html">{{ date|date:"Y" }}</a>{% if not forloop.last %},{% endif %}
-	{% endfor %}
-	</p>
+  <h1>List of Meets</h1>
+  {% sectionbyattribute 'year' meets %}
+    <h2>{{ year.year }}</h2>
+    {% meets_list year.meets %}
+  {% endsectionbyattribute %}
 {% endblock %}
