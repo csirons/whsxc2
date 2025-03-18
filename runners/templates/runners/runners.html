@@ -5,7 +5,7 @@
 
 {% block content %}
   <h1>Coach Nelson's Runners</h1>
-    {% for year in years_list reversed %}
+    {% for year in years reversed %}
       <h2>{{ year }}</h2>
       {% get_dict_value year from runners_by_year as runners %}
       <div class="runners">
@@ -14,7 +14,7 @@
             <h3 style="">{{ grade.grade|grade_name_plural }}</h3>
             {% sectionbyattribute 'gender' grade.runners %}
             <ul class="{{ gender.gender|gender_name|lower }}-list">
-                {% for runner in gender.runners %}
+                {% for runner in gender.grade_runners %}
                 <li><a href="{{ runner.get_absolute_url }}">{{ runner.name }}</a></li>
               {% endfor %}
               </ul>

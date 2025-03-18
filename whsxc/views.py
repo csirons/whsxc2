@@ -1,7 +1,8 @@
-# from django.http import HttpResponse
+from django.http import HttpResponsePermanentRedirect
+from django.views.generic import TemplateView # direct_to_template is deprecated, use TemplateView instead
 from django.shortcuts import render
 from blog.models import Entry
-from runners.models import RunnerManager, Runner, MeetManager, Meet
+from runners.models import *
 
 def homepage(request):
     # return HttpResponse("Hello, world. You're at homepage.")
@@ -17,10 +18,26 @@ def archive(request):
         },)
 
 def runners(request):
-    return render(request, 'runners/runners.html', {
-            "latest": Entry.objects.all().order_by("-created_at")[:5],
-            #datelist:
-        },)
+    #def runners_list(request):
+    # calculate which years have runners
+    years = Meet.objects.years()
+    actual_years = []
+    runners_by_year = {}
+    for year in years:
+        runners = Runner.people.by_year(year)
+        if len(runners) > 0:
+            runners_by_year[year] = runners
+            actual_years.append(year)
+    #actual_years =['2002', '2001', '2000']  # Example data for testing, replace with actual years from the database
+    #runners_by_year={'2000': ['Bob', 'Alice'], '2001': ['Charlie'], '2002': ['David']}  # Example data for testing
+    return render(request,'runners/runners.html', {
+        "runners_by_year": runners_by_year,  # Sort years in descending order
+        "years": actual_years,
+         },)
+    #return render(request, 'runners/runners.html', {
+    #        "years_list": MeetManager.years('self'),  # Assuming MeetManager has a method to get years
+    #        #datelist:
+    #    },)
 
 def meets(request):
     return render(request, 'meets/meets.html', {

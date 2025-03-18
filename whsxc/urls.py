@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.views.generic.dates import ArchiveIndexView
+from django.views.generic.base import TemplateView
 
 from django.urls import include
 from django.conf import settings
