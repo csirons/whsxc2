@@ -2,7 +2,8 @@ from django.http import HttpResponsePermanentRedirect
 from django.views.generic import TemplateView # direct_to_template is deprecated, use TemplateView instead
 from django.shortcuts import render
 from blog.models import Entry
-from runners.models import *
+#from runners.models import *
+from crosscountry.models import *
 
 def homepage(request):
     # return HttpResponse("Hello, world. You're at homepage.")
@@ -37,11 +38,9 @@ def runners(request):
 
 def meets(request):
     now = datetime.datetime.now()
-    meets = Meet.objects.filter(occurred_at__lte=now).select_related().order_by('-occurred_at')
-    #return direct_to_template(request, 'crosscountry/meets_list.html', { 'meets': meets })
-    
+    meets = Meet.objects.filter(occurred_at__lte=now).select_related().order_by('-occurred_at')    
     return render(request, 'meets/meets.html', {
-        'meets': meets, 
+        "meets": meets, 
         },)
 
 def history(request):

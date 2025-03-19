@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.humanize",
     "blog", 
     "runners",
     "meets",
@@ -45,7 +46,8 @@ INSTALLED_APPS = [
     "homemeet",
     "runninglinks",
     "summerrunning",
-    "simplemenu"
+    "simplemenu",
+    "crosscountry",  # Custom app for cross country specific functionality
 ]
 
 MIDDLEWARE = [
