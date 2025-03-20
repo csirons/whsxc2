@@ -102,7 +102,7 @@ register.inclusion_tag('runners/_runs_list.html')(runs_list)
 
 def meets_list(meets, show_year=None):
   return { 'meets': meets, 'show_year': show_year }
-register.inclusion_tag('runners/_meets_list.html')(meets_list)
+register.inclusion_tag('meets/_meets_list.html')(meets_list)
 
 def load_runs(parser,token):
    return LoadRunsNode()

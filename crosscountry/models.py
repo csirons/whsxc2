@@ -170,8 +170,9 @@ class Meet(models.Model):
 
   class Meta:
     ordering = ['-occurred_at']
+    db_table = 'crosscountry_meet'
 
-  def __unicode__(self):
+  def __str__(self):
     return u"%s (%s)" % (self.name, self.occurred_at.year)
 
   def get_absolute_url(self):
