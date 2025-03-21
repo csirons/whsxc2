@@ -171,7 +171,7 @@ class Meet(models.Model):
   class Meta:
     db_table = 'crosscountry_meet'
     ordering = ['-occurred_at']
-    db_table = 'crosscountry_meet'
+  
 
   def __str__(self):
     return u"%s (%s)" % (self.name, self.occurred_at.year)

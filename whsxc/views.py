@@ -39,7 +39,7 @@ def runners(request):
 def meets(request):
     now = datetime.datetime.now()
     meets = Meet.objects.all().filter(occurred_at__lte=now).select_related().order_by('-occurred_at')    
-    print("meets: ", meets[:5])  # Debugging line to check the first 5 meets
+    #print("meets: ", meets[:5])  # Debugging line to check the first 5 meets
     return render(request, 'meets/meets.html', {
         "meets": meets, 
         },)
