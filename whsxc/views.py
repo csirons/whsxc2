@@ -44,6 +44,33 @@ def meets(request):
         "meets": meets, 
         },)
 
+def meet_detail(request, object_id=-1, sort=None):
+#def meet_detail(request):
+    return render(request, 'history/history.html', {
+            "latest": Entry.objects.all().order_by("-created_at")[:5],
+            #datelist:
+        },)
+
+    meet = get_object_or_404(Meet, pk=object_id)
+    races = meet.race_set.order_by('team')
+
+    if sort == 'final':
+        return HttpResponsePermanentRedirect(meet.get_absolute_url())
+
+    if sort == None:
+        sort = 'final'
+
+    sort_field = {
+    'split1': 'mile_1_time',
+    'split2': 'split_2',
+    'split3': 'split_3',
+    'final': 'final_time',
+    'place': 'place',
+    'points': 'letter_points',
+    }[sort]
+
+    return redender(request, 'meets/meet_detail.html', { 'meet': meet, 'races': races, 'sort_runs_by': sort_field,},)
+
 def history(request):
     return render(request, 'history/history.html', {
             "latest": Entry.objects.all().order_by("-created_at")[:5],

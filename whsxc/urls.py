@@ -38,6 +38,8 @@ urlpatterns = [
     path('homemeet/', views.homemeet),
     path('runninglinks/', views.runninglinks),
     path('summerrunning/info/', views.summerrunning),
+    path('meets/<int:object_id>/', views.meet_detail),
+    path('meets/<int:object_id>/sort-<sort>split1|split2|split3|final|place|points)/', views.meet_detail),
     
     #path( "archive/",
     #    views.index,
