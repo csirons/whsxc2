@@ -169,6 +169,7 @@ class Meet(models.Model):
     list_display = ('name','course','team_place_female','team_place_male','top_finish_female','top_finish_male')
 
   class Meta:
+    db_table = 'crosscountry_meet'
     ordering = ['-occurred_at']
     db_table = 'crosscountry_meet'
 
