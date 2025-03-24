@@ -117,6 +117,7 @@ class Course(models.Model):
 
   class Meta:
     ordering = ['name']
+    db_table = 'crosscountry_course'
 
   class Admin:
     list_display = ('name','address1','zip_code')

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load crosscountry_extras %}
+{% load humanize %}
+
+{% block title %}{% if meet.name %} {{ meet.name }} &ndash; {% endif %} {{ meet.occurred_at|date:"F jS, Y" }}{% endblock title %}
+
+{% block content %}
+  <h1>{% if meet.name %} {{ meet.name }} &ndash; {% endif %} {{ meet.occurred_at|date:"F jS, Y" }}</h1>
+  <p class="meet-meta">
+    <b>Location:</b>
+    <a href="{{ meet.course.get_absolute_url }}">{{ meet.course.name }}</a>
+  </p>
+  {% if meet.num_teams %}<p class="meet-meta"><b>Number of schools:</b> {{ meet.num_teams }}</p>{% endif %}
+  {% if meet.official_results_url %}<p class="meet-meta"><a href="{{ meet.official_results_url }}" title="Click here to see the official results for this meet">View the official results</a></p>{% endif %}
+  {% for race in races %}
+  {% load_runs %}
+  {% if race.num_teams or runs %}
+  <h2>{{ race.team|team_name }}{% if race.team_place %} <span>- {{ race.team_place|ordinal }} place</span>{% endif %}</h2>
+    {% if runs %}
+    <table>
+      <tr>
+        <th class="name">Name</th>
+        <th width="8%" {% if sort_runs_by == 'mile_1_time' %}class="selected"{% endif %}><a href="{{ meet.get_absolute_url }}sort-split1/">Mile 1</a></th>
+        <th width="8%" {% if sort_runs_by == 'split_2' %}class="selected"{% endif %}><a href="{{ meet.get_absolute_url }}sort-split2/">Mile 2</a></th>
+        <th width="14%"{% if sort_runs_by == 'split_3' %} class="selected"{% endif %}><a href="{{ meet.get_absolute_url }}sort-split3/">Mile 3</a></th>
+        <th width="8%"{% if sort_runs_by == 'final_time' %} class="selected"{% endif %}><a href="{{ meet.get_absolute_url }}sort-final/">Final <span class="screen-only">time</span></a></th>
+        <th width="8%"{% if sort_runs_by == 'place' %} class="selected"{% endif %}><a href="{{ meet.get_absolute_url }}sort-place/">Place</a></th>
+        <th width="13%" {% if sort_runs_by == 'letter_points' %} class="selected"{% endif %}><a href="{{ meet.get_absolute_url }}sort-points/"><span class="screen-only">Letter points</span><span class="print-only">Letter Pts.</span></a></th>
+        <th class="personal-records" width="35"></th>
+        <th class="ranks" width="78"></th>
+      </tr>
+      {% for run in runs %}
+        <tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
+          <td class="name"> <a href="{{ run.runner.get_absolute_url }}">{{ run.runner.name }}</a> </td>
+          <td class="col-start"> {% if run.mile_1_time %}{{ run.mile_1_time|convert_seconds }}{% endif %} </td>
+          <td class="col-start"> {% if run.mile_1_time and run.mile_2_time %}{{ run.split_2|convert_seconds }}{% endif %} </td>
+          <td class="col-start"> {% if run.mile_2_time %}{{ run.mile_3_pace|convert_seconds }} ({{ run.split_3|convert_seconds }}){% endif %} </td>
+          <td class="col-start"> {{ run.final_time|convert_seconds }} </td>
+          <td class="col-start"> {% if run.place %}{{ run.place }}{% if race.num_runners %}/{{ race.num_runners }}{% endif %}{% endif %}</td>
+          <td class="col-start"> {{ run.letter_points }} </td>
+          <td class="badges personal-records">
+            {% if run.pr %}
+              <abbr class="pr" title="Personal Record">PR</abbr>
+            {% else %}
+              {% if run.sb %}
+                <abbr class="sb" title="Season Best">SB</abbr>
+              {% endif %}
+              {% if run.pr_course %}
+                <abbr class="pr-course" title="Personal Course Record">PCR</abbr>
+              {% endif %}
+            {% endif %}
+          </td>
+          <td class="badges ranks">
+            {% if run.all_time_rank|less_than:11 %}
+              <a class="all-time-rank" href="/top10/#all-time">{{ run.all_time_rank|ordinal }} All Time</a>
+            {% else %}
+              {% if run.grade_rank|less_than:11 %}
+                <a class="grade-rank" href="/top10/#{{ run.grade|grade_name|slugify}}">{{ run.grade_rank|ordinal }} {{ run.grade|grade_name }}</a>
+              {% else %}
+                {% if run.course_rank|less_than:11 %}
+                  <a class="course-rank" href="/courses/{{ run.course.id }}/#all-time">{{ run.course_rank|ordinal }} Course</a>
+                {% endif %}
+              {% endif %}
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+    {% endif %}
+    {% if race.num_teams %}<p class="race-meta"><b>Number of teams competing:</b> {{ race.num_teams }}</p>{% endif %}
+  {% endif %}
+  {% endfor %}
+  {% if meet.summary %}
+    <h2>Team highlights</h2>
+    {{ meet.summary|safe|linebreaks }}
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load crosscountry_extras %}
+
+{% block title %}List of Courses{% endblock title %}
+
+{% block content %}
+	<h1>List of Courses</h1>
+  {% for course in courses %}
+  <a href="{{ course.get_absolute_url }}">{{ course.name }}</a><br>
+  {% endfor %}
+{% endblock %}

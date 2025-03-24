@@ -1,8 +1,10 @@
 from django.http import HttpResponsePermanentRedirect
 from django.views.generic import TemplateView # direct_to_template is deprecated, use TemplateView instead
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from blog.models import Entry
 from crosscountry.models import *
+import datetime
 
 
 def homepage(request):
@@ -46,10 +48,10 @@ def meets(request):
 
 def meet_detail(request, object_id=-1, sort=None):
 #def meet_detail(request):
-    return render(request, 'history/history.html', {
-            "latest": Entry.objects.all().order_by("-created_at")[:5],
-            #datelist:
-        },)
+    #return render(request, 'history/history.html', {
+    #        "latest": Entry.objects.all().order_by("-created_at")[:5],
+    #        #datelist:
+    #    },)
 
     meet = get_object_or_404(Meet, pk=object_id)
     races = meet.race_set.order_by('team')
@@ -69,7 +71,7 @@ def meet_detail(request, object_id=-1, sort=None):
     'points': 'letter_points',
     }[sort]
 
-    return redender(request, 'meets/meet_detail.html', { 'meet': meet, 'races': races, 'sort_runs_by': sort_field,},)
+    return render(request, 'meets/meet_detail.html', { 'meet': meet, 'races': races, 'sort_runs_by': sort_field,},)
 
 def history(request):
     return render(request, 'history/history.html', {
@@ -99,4 +101,46 @@ def summerrunning(request):
     return render(request, 'summerrunning/summerrunning.html', {
             "latest": Entry.objects.all().order_by("-created_at")[:5],
             #datelist:
+        },)
+
+def courses_list(request):
+  courses = Course.objects.all()
+  return render(request, 'courses_list.html', { 'courses': courses })
+
+def course_detail(request, object_id = -1, sort = 'final'):
+    course = get_object_or_404(Course, pk=object_id)
+    now = datetime.datetime.now()
+    meets = course.meet_set.filter(occurred_at__lte=now)
+
+    best_runs_male = Run.objects.select_related().filter(gender='M').filter(course=course).order_by('final_time')[:10]
+    best_runs_female = Run.objects.select_related().filter(gender='F').filter(course=course).order_by('final_time')[:10]
+
+    freshman_runs_male = Run.freshmanruns.filter(gender='M').filter(course=course).order_by('final_time')[:10]
+    freshman_runs_female = Run.freshmanruns.filter(gender='F').filter(course=course).order_by('final_time')[:10]
+
+    sophomore_runs_male = Run.sophomoreruns.filter(gender='M').filter(course=course).order_by('final_time')[:10]
+    sophomore_runs_female = Run.sophomoreruns.filter(gender='F').filter(course=course).order_by('final_time')[:10]
+
+    junior_runs_male = Run.juniorruns.filter(gender='M').filter(course=course).order_by('final_time')[:10]
+    junior_runs_female = Run.juniorruns.filter(gender='F').filter(course=course).order_by('final_time')[:10]
+
+    senior_runs_male = Run.seniorruns.filter(gender='M').filter(course=course).order_by('final_time')[:10]
+    senior_runs_female = Run.seniorruns.filter(gender='F').filter(course=course).order_by('final_time')[:10]
+    #return render(request, 'summerrunning/summerrunning.html', {
+    #        "latest": Entry.objects.all().order_by("-created_at")[:5],
+    #        #datelist:
+    #    },)
+    return render(request, 'course_detail.html', {
+        'course': course,
+        'best_runs_male': best_runs_male,
+        'best_runs_female': best_runs_female,
+        'freshman_runs_male': freshman_runs_male,
+        'freshman_runs_female': freshman_runs_female,
+        'sophomore_runs_male': sophomore_runs_male,
+        'sophomore_runs_female': sophomore_runs_female,
+        'junior_runs_male': junior_runs_male,
+        'junior_runs_female': junior_runs_female,
+        'senior_runs_male': senior_runs_male,
+        'senior_runs_female': senior_runs_female,
+        'meets': meets,
         },)

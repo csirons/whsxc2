@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load crosscountry_extras %}
+
+{% block title %} {{ course.name }} {% endblock title %}
+
+{% block content %}
+  <h1>{{ course.name }}</h1>
+  <p class="toc">
+    {% if course.description or course.route %}
+      <a href="#description">Course Description</a> |
+    {% endif %}
+    {% if course.address1 or course.directions %}
+      <a href="#directions">Directions</a> |
+    {% endif %}
+    {% if best_runs_male|length or best_runs_female|length %}
+      <a href="#topruns">Top Runs</a> |
+    {% endif %}
+    {% if meets %}
+      <a href="#meets">Meets</a>
+    {% endif %}
+  </p>
+
+  {% if course.description or course.route %}
+    <h2 id="description">Course Description</h2>
+    {% if course.description %}<p>{{ course.description }}</p>{% endif %}
+
+    {% if course.route %}
+      <div class="course-map" data-route="{{ course.route }}"></div>
+      <div class="course-elevation"></div>
+    {% endif %}
+  {% endif %}
+
+  {% if course.address1 or course.directions %}
+    <div class="directions-container">
+      <h2 id="directions">Directions</h2>
+      {% if course.address1 %}
+        <p class="address">
+        {{ course.address1 }}{% if course.address1 and course.zip_code %}, {% endif %}
+        {% if course.zip_code %}
+          {{ course.zip_code }}
+        {% endif %}
+        </p>
+      {% endif %}
+
+      {% if course.directions %}
+        <p>{{ course.directions }}</p>
+      {% endif %}
+
+      {% if course.address1 and course.zip_code %}
+        <div class="big-map">
+          <div class="directions-map" data-name="{{ course.name }}" data-address="{{ course.address1 }}{% if course.zip_code %}, {{ course.zip_code }}{% endif %}"></div>
+          <a class="directions-link" href="http://maps.google.com/?q=to:{{ course.address1|escape }},+{{ course.zip_code|escape }}">Click Here for Directions</a>
+        </div>
+      {% endif %}
+    </div>
+  {% endif %}
+
+  {% if best_runs_male or best_runs_female %}
+    <h2 id="topruns">Top Runs at {{ course.name }}</h2>
+    {% include "crosscountry/_top_runs.html" %}
+  {% endif %}
+
+  {% if meets %}
+    <div class="meets-container">
+      <h2 id="meets">Meets at {{ course.name }}</h2>
+      {% meets_list meets 'yes' %}
+    </div>
+  {% endif %}
+
+  {% if course.route or course.address1 %}
+    <script src="http://www.google.com/jsapi"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script src="{{ MEDIA_URL }}javascript/raphael.js"></script>
+    <script src="{{ MEDIA_URL }}javascript/g.raphael.js"></script>
+    <script src="{{ MEDIA_URL }}javascript/g.line.js"></script>
+    <script src="{{ MEDIA_URL }}javascript/maps.js"></script></script>
+  {% endif %}
+{% endblock %}

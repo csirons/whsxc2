@@ -39,11 +39,10 @@ urlpatterns = [
     path('runninglinks/', views.runninglinks),
     path('summerrunning/info/', views.summerrunning),
     path('meets/<int:object_id>/', views.meet_detail),
-    path('meets/<int:object_id>/sort-<sort>split1|split2|split3|final|place|points)/', views.meet_detail),
-    
-    #path( "archive/",
-    #    views.index,
-    #    name="blogindex"),
+    path('meets/<int:object_id>/sort-<str:sort>/', views.meet_detail),
+    path('meets/<int:object_id>/', views.meet_detail ),
+    path('courses/', views.courses_list),
+    path('courses/<int:object_id>/', views.course_detail),
 ]
  
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
