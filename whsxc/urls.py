@@ -43,6 +43,7 @@ urlpatterns = [
     path('meets/<int:object_id>/', views.meet_detail ),
     path('courses/', views.courses_list),
     path('courses/<int:object_id>/', views.course_detail),
+    path('top10/', views.top10_list),
 ]
  
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

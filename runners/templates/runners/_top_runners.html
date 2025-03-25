@@ -1,0 +1,9 @@
+{% load crosscountry_extras %}
+
+<div class="runners">
+{% runs_list best_runners_female best_runners_male "All Time" %}
+{% runs_list senior_runners_female senior_runners_male "Senior" %}
+{% runs_list junior_runners_female junior_runners_male "Junior" %}
+{% runs_list sophomore_runners_female sophomore_runners_male "Sophomore" %}
+{% runs_list freshman_runners_female freshman_runners_male "Freshman" %}
+</div>

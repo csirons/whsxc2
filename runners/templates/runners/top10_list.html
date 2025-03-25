@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load crosscountry_extras %}
+
+{% block title %}Runners{% endblock title %}
+
+{% block content %}
+<div class="top10">
+  <h1>Coach Nelson's Top 10 lists</h1>
+  <h2>Top Runners</h2>
+  {% include "runners/_top_runners.html" %}
+  <h2>Top Individual Runs</h2>
+  {% include "runners/_top_runs.html" %}
+</div>
+{% endblock %}

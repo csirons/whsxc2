@@ -144,3 +144,60 @@ def course_detail(request, object_id = -1, sort = 'final'):
         'senior_runs_female': senior_runs_female,
         'meets': meets,
         },)
+
+def top10_list(request):
+    best_runners_male = Run.objects.filter(gender='M').extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).order_by('best_time').distinct('runner_id')[:10]
+    #best_runners_male = Run.objects.filter(gender='M').extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).order_by('best_time')#.group_by('runner_id')[:10]
+    best_runners_female = Run.objects.extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).filter(gender='F').order_by('best_time').distinct('runner_id')[:10]
+
+    freshman_runners_male = Run.freshmanruns.filter(gender='M').extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).order_by('best_time').distinct('runner_id')[:10]
+    freshman_runners_female = Run.freshmanruns.extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).filter(gender='F').order_by('best_time').distinct('runner_id')[:10]
+    sophomore_runners_male = Run.sophomoreruns.filter(gender='M').extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).order_by('best_time').distinct('runner_id')[:10]
+    sophomore_runners_female = Run.sophomoreruns.extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).filter(gender='F').order_by('best_time').distinct('runner_id')[:10]
+    junior_runners_male = Run.juniorruns.filter(gender='M').extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).order_by('best_time').distinct('runner_id')[:10]
+    junior_runners_female = Run.juniorruns.extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).filter(gender='F').order_by('best_time').distinct('runner_id')[:10]
+    senior_runners_male = Run.seniorruns.filter(gender='M').extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).order_by('best_time').distinct('runner_id')[:10]
+    senior_runners_female = Run.seniorruns.extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).filter(gender='F').order_by('best_time').distinct('runner_id')[:10]
+
+    best_runs_male = Run.objects.select_related().filter(gender='M').order_by('final_time')[:10]
+    best_runs_female = Run.objects.select_related().filter(gender='F').order_by('final_time')[:10]
+
+    freshman_runs_male = Run.freshmanruns.filter(gender='M').order_by('final_time')[:10]
+    freshman_runs_female = Run.freshmanruns.filter(gender='F').order_by('final_time')[:10]
+
+    sophomore_runs_male = Run.sophomoreruns.filter(gender='M').order_by('final_time')[:10]
+    sophomore_runs_female = Run.sophomoreruns.filter(gender='F').order_by('final_time')[:10]
+
+    junior_runs_male = Run.juniorruns.filter(gender='M').order_by('final_time')[:10]
+    junior_runs_female = Run.juniorruns.filter(gender='F').order_by('final_time')[:10]
+
+    senior_runs_male = Run.seniorruns.filter(gender='M').order_by('final_time')[:10]
+    senior_runs_female = Run.seniorruns.filter(gender='F').order_by('final_time')[:10]
+
+    #return render(request, 'summerrunning/summerrunning.html', {
+    #        "latest": Entry.objects.all().order_by("-created_at")[:5],
+    #        #datelist:
+    #    },)
+
+    return render(request,'runners/top10_list.html', {
+        'best_runners_male': best_runners_male,
+        'best_runners_female': best_runners_female,
+        'freshman_runners_male': freshman_runners_male,
+        'freshman_runners_female': freshman_runners_female,
+        'sophomore_runners_male': sophomore_runners_male,
+        'sophomore_runners_female': sophomore_runners_female,
+        'junior_runners_male': junior_runners_male,
+        'junior_runners_female': junior_runners_female,
+        'senior_runners_male': senior_runners_male,
+        'senior_runners_female': senior_runners_female,
+        'best_runs_male': best_runs_male,
+        'best_runs_female': best_runs_female,
+        'freshman_runs_male': freshman_runs_male,
+        'freshman_runs_female': freshman_runs_female,
+        'sophomore_runs_male': sophomore_runs_male,
+        'sophomore_runs_female': sophomore_runs_female,
+        'junior_runs_male': junior_runs_male,
+        'junior_runs_female': junior_runs_female,
+        'senior_runs_male': senior_runs_male,
+        'senior_runs_female': senior_runs_female,
+        },)
