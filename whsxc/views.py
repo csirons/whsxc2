@@ -201,3 +201,48 @@ def top10_list(request):
         'senior_runs_male': senior_runs_male,
         'senior_runs_female': senior_runs_female,
         },)
+
+def runner_detail(request, object_id=-1, sort=None, organize="year"):
+  # calculate which years has been running
+  # calculate letter points for those years using a group by and SUM
+
+  runner = get_object_or_404(Runner, pk=object_id)
+
+  if sort == 'date':
+    return HttpResponsePermanentRedirect(runner.get_absolute_url())
+
+  if sort == None:
+    sort = 'date'
+
+  sort_field = {
+    'split1': 'mile_1_time',
+    'split2': 'split_2',
+    'split3': 'split_3',
+    'final': 'final_time',
+    'place': 'place',
+    'points': 'letter_points',
+    'date': '-occurred_at',
+  }[sort]
+
+  if not organize:
+    organize = 'year'
+
+  organize_field = {
+    'year': 'year',
+      'course': 'course',
+  }[organize]
+
+  organize_direction = {
+    'year': '-',
+    'course': '',
+  }[organize]
+
+  runs = runner.run_set.extra(select={'year': "strftime('%%Y',occurred_at)"}).order_by(organize_direction+organize_field,sort_field)
+
+  #return render(request, 'summerrunning/summerrunning.html', {
+  #          "latest": Entry.objects.all().order_by("-created_at")[:5],
+  #          #datelist:
+  #      },)
+
+  return render(request,'runners/runner_detail.html', { 'runner':runner, 'runs':runs, 'sort_runs_by':sort_field, 'organize_field':organize_field })
+

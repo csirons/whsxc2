@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load crosscountry_extras %}
+{% load humanize %}
+
+{% block title %}{{ runner.name }} &ndash; Class of {{ runner.year }}{% endblock title %}
+
+{% block content %}
+  <h1>{{ runner.name }} &ndash; Class of {{ runner.year }}</h1>
+  <p class="runner-meta"><b>Organize by:</b> <a href="{{ runner.get_absolute_url }}">Year</a> or <a href="{{ runner.get_absolute_url }}organize-course/">Course</a>
+  {% sectionbyattribute organize_field runs %}
+  {% if organize_field.year %}
+    <h2>{{ organize_field.year }}</h2>
+  {% else %}
+    <h2><a href="{{ organize_field.runs.0.course.get_absolute_url }}">{{ organize_field.runs.0.course }}</a></h2>
+  {% endif %}
+  <table>
+    <tr>
+        <th class="meet">Meet</th>
+        <th width="8%" {% if sort_runs_by == 'mile_1_time' %} class="selected"{% endif %}><a href="{{ runner.get_absolute_url }}sort-split1/">Mile 1</a></th>
+        <th width="8%" {% if sort_runs_by == 'split_2' %} class="selected"{% endif %}><a href="{{ runner.get_absolute_url }}sort-split2/">Mile 2</a></th>
+        <th width="14%" {% if sort_runs_by == 'split_3' %} class="selected"{% endif %}><a href="{{ runner.get_absolute_url }}sort-split3/">Mile 3</a></th>
+        <th width="8%"{% if sort_runs_by == 'final_time' %} class="selected"{% endif %}><a href="{{ runner.get_absolute_url }}sort-final/">Final time</a></th>
+        <th width="8%"{% if sort_runs_by == 'place' %} class="selected"{% endif %}><a href="{{ runner.get_absolute_url }}sort-place/">Place</a></th>
+        <th width="13%"{% if sort_runs_by == 'letter_points' %} class="selected"{% endif %}><a href="{{ runner.get_absolute_url }}sort-points/">Letter points</a></th>
+        <th class="personal-records" width="35"></th>
+        <th class="ranks" width="78"></th>
+    </tr>
+    {% for run in organize_field.runs %}
+      <tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
+        <td class="meet"> <a href="{{ run.meet.get_absolute_url }}">{% if run.meet.name %} {{ run.meet.name }}{% if not organize_field.year %} ({{ run.year }}){% endif %}{% else %} {{ run.meet.occurred_at|date:"F jS, Y" }} {% endif %}</a> </td>
+        <td class="col-start"> {% if run.mile_1_time %}{{ run.mile_1_time|convert_seconds }}{% endif %} </td>
+        <td class="col-start"> {% if run.mile_1_time and run.mile_2_time %}{{ run.split_2|convert_seconds }}{% endif %} </td>
+        <td class="col-start"> {% if run.mile_2_time %}{{ run.mile_3_pace|convert_seconds }} ({{ run.split_3|convert_seconds }}){% endif %} </td>
+        <td class="col-start"> {{ run.final_time|convert_seconds }} </td>
+        <td class="col-start"> {% if run.place %}{{ run.place }}{% if run.race.num_runners %}/{{ run.race.num_runners }}{% endif %}{% endif %}</td>
+        <td class="col-start"> {{ run.letter_points }} </td>
+        <td class="badges personal-records">
+          {% if run.pr %}
+            <abbr class="pr" title="Personal Record">PR</abbr>
+          {% else %}
+            {% if run.sb %}
+              <abbr class="sb" title="Season Best">SB</abbr>
+            {% endif %}
+            {% if run.pr_course %}
+              <abbr class="pr-course" title="Personal Course Record">PCR</abbr>
+            {% endif %}
+          {% endif %}
+        </td>
+        <td class="badges ranks">
+          {% if run.all_time_rank|less_than:11 %}
+            <a class="all-time-rank" href="/top10/#all-time">{{ run.all_time_rank|ordinal }} All Time</a>
+          {% else %}
+            {% if run.grade_rank|less_than:11 %}
+              <a class="grade-rank" href="/top10/#{{ run.grade|grade_name|slugify}}">{{ run.grade_rank|ordinal }} {{ run.grade|grade_name }}</a>
+            {% else %}
+              {% if run.course_rank|less_than:11 %}
+                <a class="course-rank" href="/courses/{{ run.course.id }}/#all-time">{{ run.course_rank|ordinal }} Course</a>
+              {% endif %}
+            {% endif %}
+          {% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+  {% if organize_field.year %} <p class="race-meta"><b>Letter points for this season*:</b> {% sum organize_field.runs letter_points %} </p> {% endif %}
+  {% endsectionbyattribute %}
+  <p class="disclaimer">*Letter points listed here are only for points earned in meets</p>
+{% endblock %}

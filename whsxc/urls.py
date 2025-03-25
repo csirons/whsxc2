@@ -44,6 +44,9 @@ urlpatterns = [
     path('courses/', views.courses_list),
     path('courses/<int:object_id>/', views.course_detail),
     path('top10/', views.top10_list),
+    path('runners/<int:object_id>/', views.runner_detail), # tiis is new, was not on the original
+    path('runners/<int:object_id>/(organize-<str:organize>/)?', views.runner_detail),
+    path('runners/<int:object_id>/(organize-<str:organize>/)?sort-<str:sort>/', views.runner_detail),
 ]
  
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
