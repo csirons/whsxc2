@@ -62,6 +62,7 @@ class Runner(models.Model):
 
   class Meta:
     ordering = ['name']
+    db_table = 'crosscountry_runner'
 
   class Admin:
     list_filter = ['year','gender']

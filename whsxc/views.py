@@ -229,7 +229,7 @@ def runner_detail(request, object_id=-1, sort=None, organize="year"):
 
   organize_field = {
     'year': 'year',
-      'course': 'course',
+    'course': 'course',
   }[organize]
 
   organize_direction = {
@@ -237,12 +237,13 @@ def runner_detail(request, object_id=-1, sort=None, organize="year"):
     'course': '',
   }[organize]
 
-  runs = runner.run_set.extra(select={'year': "strftime('%%Y',occurred_at)"}).order_by(organize_direction+organize_field,sort_field)
-
+  runs = runner.run_set.extra(select={'year': 'strftime("%%Y",occurred_at)'}).order_by(organize_direction+organize_field,sort_field)
+ 
   #return render(request, 'summerrunning/summerrunning.html', {
   #          "latest": Entry.objects.all().order_by("-created_at")[:5],
   #          #datelist:
   #      },)
 
-  return render(request,'runners/runner_detail.html', { 'runner':runner, 'runs':runs, 'sort_runs_by':sort_field, 'organize_field':organize_field })
+
+  return render(request,'runners/runner_detail.html', { 'runner':runner, 'runs':runs, 'sort_runs_by':sort_field, 'organize_field':organize_field },)
 
