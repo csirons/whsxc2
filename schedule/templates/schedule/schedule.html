@@ -1,19 +1,63 @@
 {% extends "base.html" %}
+{% load crosscountry_extras %}
 
-{% block title %}Widefield High School Cross Country{% endblock title %}
+{% block title %}{{ now.year }} Schedule{% endblock title %}
 
 {% block content %}
-  <h1>Widefield High School Cross Country Team Blog</h1>
-  {% for entry in latest %}
-    <h2> {{ entry.title|safe }} </h2>
-		<p class="blog-meta">{{ entry.created_at|date:"l, F jS, Y" }}</p>
-    {{ entry.text|safe|linebreaks }}
-  {% endfor %}
+<h1>{{ now.year }} Schedule</h1>
 
-	<p class="blog-archives">
-	Full archives: 
-	{% for date in date_list reversed %}
-	<a href="blog/{{ date|date:"Y" }}.html">{{ date|date:"Y" }}</a>{% if not forloop.last %},{% endif %}
-	{% endfor %}
-	</p>
+  {% if meets|length %}
+    {% if not next_meet %}
+    <p>The {{ now.year }} Season is over, please check back next year for the upcoming season schedule</p>
+    {% endif %}
+
+    <div class="schedule">
+      {% for meet in meets %}
+        <div class="grade-list">
+          <h3>{{ meet.occurred_at|date:"F j" }}</h3>
+          {% if meet.past_tense %}
+            <div class="girls-list">
+              {{ meet.name }}
+            </div>
+            <div class="boys-list">
+              {{ meet.now }}
+
+              <a href="/meets/{{ meet.id }}">View Results</a>
+            </div>
+          {% else %}
+            <div class="girls-list">
+              {{ meet.name }}<br>
+              <span style="font-size: 12px;">
+              {% if meet.have_race_times %}
+                {% for race in meet.races %}
+                  {{ race.team|team_name }}: {{ race.time|time_tba }}<br>
+                {% endfor %}
+              {% else %}
+                Starts at {{ meet.occurred_at|time_tba }}
+              {% endif %}
+              </span>
+            </div>
+            <div class="boys-list">
+              <p>
+              <a href="{{ meet.course.get_absolute_url }}">{{ meet.course.name }}</a>
+              {% if meet.course.address1 %}
+                <br>
+                {{ meet.course.address1 }}{% if meet.course.address1 and meet.course.zip_code %}, {% endif %}
+                {% if meet.course.zip_code %}
+                  {{ meet.course.zip_code }}
+                {% endif %}
+              {% endif %}
+              </p>
+
+              {% if meet.course.directions %}
+                <p>{{ meet.course.directions }}</p>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+  <p>We have not yet posted the {{ now.year }} schedule. If it should have been posted by now get a hold of coach and let him know he needs to get his act together!</p>
+  {% endif %}
 {% endblock %}
