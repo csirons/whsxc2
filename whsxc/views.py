@@ -74,9 +74,8 @@ def meet_detail(request, object_id=-1, sort=None):
     return render(request, 'meets/meet_detail.html', { 'meet': meet, 'races': races, 'sort_runs_by': sort_field,},)
 
 def history(request):
-    best_runners_male = Run.objects.filter(gender='M').extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).order_by('best_time')[:10]
-    #best_runners_male = Run.objects.filter(gender='M').extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).order_by('best_time')#.group_by('runner_id')[:10]
-    best_runners_female = Run.objects.extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).filter(gender='F').order_by('best_time')[:10]
+    best_runners_male = Run.objects.raw("select *, MIN(\"run\".\"final_time\") as best_time from crosscountry_run run where gender = 'M' group by run.runner_id order by best_time asc  limit 10")
+    best_runners_female = Run.objects.raw("select *, MIN(\"run\".\"final_time\") as best_time from crosscountry_run run where gender = 'F' group by run.runner_id order by best_time asc  limit 10")
 
     freshman_runners_male = Run.freshmanruns.filter(gender='M').extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).order_by('best_time')[:10]
     freshman_runners_female = Run.freshmanruns.extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).filter(gender='F').order_by('best_time')[:10]
