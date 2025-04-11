@@ -62,10 +62,7 @@
       </tr>
     {% endfor %}
   </table>
-  {% if organize_field.year %} 
-    <p class="race-meta"><b>Letter points for this season*:</b> 
-    {% sum organize_field.runs letter_points %} </p> 
-  {% endif %}
+
   {% endsectionbyattribute %}
   <p class="disclaimer">*Letter points listed here are only for points earned in meets</p>
 {% endblock %}
