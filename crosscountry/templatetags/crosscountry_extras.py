@@ -180,7 +180,7 @@ class SumNode(template.Node):
     sum = 0
     for item in self.list.resolve(context):
       sum += getattr(item,self.field_name)
-    return sum
+    return str(sum)
 register.tag('sum',sum)
 
 def get_dict_value(parser,token):
