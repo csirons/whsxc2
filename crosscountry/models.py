@@ -173,7 +173,7 @@ class Meet(models.Model):
   class Meta:
     db_table = 'crosscountry_meet'
     ordering = ['-occurred_at']
-  
+
 
   def __str__(self):
     return u"%s (%s)" % (self.name, self.occurred_at.year)
@@ -263,12 +263,6 @@ class Race(models.Model):
     self.meet_name = "%s" % self.meet
 
     super(Race,self).save()
-
-  class Admin:
-    list_display = ('meet','team','course_name','team_place','top_finish','pack_time')
-    list_filter = ['team','occurred_at','course_name']
-    date_hierarchy = 'occurred_at'
-    js = [ '/media/javascript/convert_times.js' ]
 
   def __unicode__(self):
     return "%s - %s" % (self.meet_name, TEAM_CHOICES_REVERSE[self.team])
@@ -472,4 +466,3 @@ class Run(models.Model):
 
   def year(self):
     return self.occurred_at.year
-
