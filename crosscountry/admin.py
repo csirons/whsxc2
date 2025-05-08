@@ -31,7 +31,7 @@ from crosscountry.models import Course
 
 
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ('name', 'address1', 'zip_code', 'directions', 'description', 'route_url')
+    list_display = ('name','route_url')
     list_filter = ['name']
     js = [ '/media/javascript/convert_times.js' ]
 
@@ -45,7 +45,7 @@ from crosscountry.models import Meet
 
 
 class MeetAdmin(admin.ModelAdmin):
-    list_display = ('course_id', 'name', 'occurred_at', 'num_teams', 'official_results_url', 'summary', 'team_place_female', 'top_finish_female', 'pack_time_female', 'team_place_male', 'top_finish_male', 'pack_time_male')
+    list_display = ('name', 'occurred_at')
     list_filter = ['name']
     js = [ '/media/javascript/convert_times.js' ]
 
