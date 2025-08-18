@@ -349,7 +349,7 @@ class Run(models.Model):
     pass
 
   def __str__(self):
-    return "%s Run for %s - %s" % (self.occurred_at, self.runner.name, self.race)
+    return "%s - %s - %s" % (self.occurred_at.date(), self.runner.name, self.race)
 
   def calc_letter_points(self):
     points = 0
