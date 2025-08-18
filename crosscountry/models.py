@@ -4,6 +4,8 @@ from django.dispatch import dispatcher
 from django.db.models import signals
 #from crosscountry import signals as mysignals
 from django.utils import timezone
+from django import forms
+import re
 
 #import urllib2 # thi s is for version 2.x
 import urllib # this is for version 3.x
@@ -309,17 +311,70 @@ class SeniorRunsManager(models.Manager):
   def get_query_set(self):
     return super(SeniorRunsManager, self).get_query_set().extra(tables=['crosscountry_runner'],where=['crosscountry_runner.id = crosscountry_run.runner_id',("(crosscountry_runner.year - strftime('%%Y',crosscountry_run.occurred_at)) = 1")]).order_by('final_time')
 
+
+class MinutesSecondsWidget(forms.TextInput):
+    def __init__(self, attrs=None):
+            default_attrs = {
+                'style': 'width: 80px;',  # Adjust width as needed
+                'placeholder': 'MM:SS'
+            }
+            if attrs:
+                default_attrs.update(attrs)
+            super().__init__(default_attrs)
+
+    def format_value(self, value):
+        if value is None or value == '':
+            return ''
+
+        try:
+            total_seconds = int(value)
+            minutes = total_seconds // 60
+            seconds = total_seconds % 60
+            return f"{minutes}:{seconds:02d}"
+        except (ValueError, TypeError):
+            return value
+
+    def value_from_datadict(self, data, files, name):
+        value = super().value_from_datadict(data, files, name)
+
+        if not value:
+            return None
+
+        # Parse MM:SS format
+        pattern = r'^(\d+):([0-5]?\d)$'
+        match = re.match(pattern, str(value).strip())
+
+        if match:
+            minutes = int(match.group(1))
+            seconds = int(match.group(2))
+            return minutes * 60 + seconds
+
+        # Parse MM:SS format
+        pattern = r'^(\d+)$'
+        match = re.match(pattern, str(value).strip())
+        if match:
+            minutes = int(match.group(1))
+            return minutes * 60
+
+        return value
+
+class MinutesSecondsField(models.IntegerField):
+
+    def formfield(self, **kwargs):
+            kwargs['widget'] = MinutesSecondsWidget
+            return super().formfield(**kwargs)
+
 class Run(models.Model):
   #runner = models.ForeignKey(Runner, edit_inline=models.TABULAR)
   #race = models.ForeignKey(Race, edit_inline=models.TABULAR, min_num_in_admin=7)
   runner = models.ForeignKey(Runner, on_delete=models.CASCADE)
   race = models.ForeignKey(Race, on_delete=models.CASCADE)
-  mile_1_time = models.IntegerField(null=True,blank=True)
-  mile_2_time = models.IntegerField(null=True,blank=True)
+  mile_1_time = MinutesSecondsField(null=True,blank=True)
+  mile_2_time = MinutesSecondsField(null=True,blank=True)
   split_2 = models.IntegerField(null=True,editable=False)
   split_3 = models.IntegerField(null=True,editable=False)
   #final_time = models.IntegerField(core=True)
-  final_time = models.IntegerField(null=True,blank=True) # in seconds
+  final_time = MinutesSecondsField(null=True,blank=True) # in seconds
   place = models.IntegerField(null=True,blank=True)
 
   # calculate automagically
