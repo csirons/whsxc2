@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "django.contrib.sites",
+    "django.contrib.flatpages",
     "blog",
     "runners",
     "meets",
@@ -60,6 +62,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.contrib.flatpages.middleware.FlatpageFallbackMiddleware",
 ]
 
 ROOT_URLCONF = "whsxc.urls"
@@ -169,12 +172,15 @@ if not DEBUG:
     # SECURE_SSL_REDIRECT = True  # Disabled - Fly.io handles HTTPS redirect
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    
+
 CSRF_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_SAMESITE = 'Lax'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Site ID for django.contrib.sites (required for flatpages)
+SITE_ID = 1
 
 # Logging configuration for Fly.io
 LOGGING = {
@@ -217,23 +223,23 @@ LOGGING = {
 # Fly.io specific settings
 if config('FLY_APP_NAME', default=None):
     # Running on Fly.io
-    
+
     # Use Fly.io's internal networking
     INTERNAL_IPS = [
         '127.0.0.1',
         'localhost',
     ]
-    
+
     # Email configuration (if needed)
     EMAIL_BACKEND = config(
-        'EMAIL_BACKEND', 
+        'EMAIL_BACKEND',
         default='django.core.mail.backends.console.EmailBackend'
     )
-    
+
     # Session configuration
     SESSION_COOKIE_AGE = 86400  # 1 day
     SESSION_SAVE_EVERY_REQUEST = True
-    
+
     # Cache configuration (optional - can use Redis if needed)
     CACHES = {
         'default': {
