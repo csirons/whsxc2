@@ -77,29 +77,27 @@ def history(request):
     best_runners_male = Run.objects.raw("select *, MIN(\"run\".\"final_time\") as best_time from crosscountry_run run where gender = 'M' group by run.runner_id order by best_time asc  limit 10")
     best_runners_female = Run.objects.raw("select *, MIN(\"run\".\"final_time\") as best_time from crosscountry_run run where gender = 'F' group by run.runner_id order by best_time asc  limit 10")
 
-    freshman_runners_male = Run.freshmanruns.filter(gender='M').extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).order_by('best_time')[:10]
-    freshman_runners_female = Run.freshmanruns.extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).filter(gender='F').order_by('best_time')[:10]
-    sophomore_runners_male = Run.sophomoreruns.filter(gender='M').extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).order_by('best_time')[:10]
-    sophomore_runners_female = Run.sophomoreruns.extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).filter(gender='F').order_by('best_time')[:10]
-    junior_runners_male = Run.juniorruns.filter(gender='M').extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).order_by('best_time')[:10]
-    junior_runners_female = Run.juniorruns.extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).filter(gender='F').order_by('best_time')[:10]
-    senior_runners_male = Run.seniorruns.filter(gender='M').extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).order_by('best_time')[:10]
-    senior_runners_female = Run.seniorruns.extra(select={'best_time': 'MIN("crosscountry_run"."final_time")'}).filter(gender='F').order_by('best_time')[:10]
+    freshman_runners_male = Run.freshmanruns.raw("select *, MIN(\"run\".\"final_time\") as best_time from crosscountry_run run where grade = '4' and gender = 'M' group by run.runner_id order by best_time asc  limit 10")
+    freshman_runners_female = Run.freshmanruns.raw("select *, MIN(\"run\".\"final_time\") as best_time from crosscountry_run run where grade = '4' and gender = 'F' group by run.runner_id order by best_time asc  limit 10")
+    sophomore_runners_male = Run.sophomoreruns.raw("select *, MIN(\"run\".\"final_time\") as best_time from crosscountry_run run where grade = '3' and gender = 'M' group by run.runner_id order by best_time asc  limit 10")
+    sophomore_runners_female = Run.sophomoreruns.raw("select *, MIN(\"run\".\"final_time\") as best_time from crosscountry_run run where grade = '3' and gender = 'F' group by run.runner_id order by best_time asc  limit 10")
+    junior_runners_male = Run.juniorruns.raw("select *, MIN(\"run\".\"final_time\") as best_time from crosscountry_run run where grade = '2' and gender = 'M' group by run.runner_id order by best_time asc  limit 10")
+    junior_runners_female = Run.juniorruns.raw("select *, MIN(\"run\".\"final_time\") as best_time from crosscountry_run run where grade = '2' and gender = 'F' group by run.runner_id order by best_time asc  limit 10")
+    senior_runners_male = Run.seniorruns.raw("select *, MIN(\"run\".\"final_time\") as best_time from crosscountry_run run where grade = '1' and gender = 'M' group by run.runner_id order by best_time asc  limit 10")
+    senior_runners_female = Run.seniorruns.raw("select *, MIN(\"run\".\"final_time\") as best_time from crosscountry_run run where grade = '1' and gender = 'F' group by run.runner_id order by best_time asc  limit 10")
+
 
     best_runs_male = Run.objects.select_related().filter(gender='M').order_by('final_time')[:10]
     best_runs_female = Run.objects.select_related().filter(gender='F').order_by('final_time')[:10]
 
-    freshman_runs_male = Run.freshmanruns.filter(gender='M').order_by('final_time')[:10]
-    freshman_runs_female = Run.freshmanruns.filter(gender='F').order_by('final_time')[:10]
-
-    sophomore_runs_male = Run.sophomoreruns.filter(gender='M').order_by('final_time')[:10]
-    sophomore_runs_female = Run.sophomoreruns.filter(gender='F').order_by('final_time')[:10]
-
-    junior_runs_male = Run.juniorruns.filter(gender='M').order_by('final_time')[:10]
-    junior_runs_female = Run.juniorruns.filter(gender='F').order_by('final_time')[:10]
-
-    senior_runs_male = Run.seniorruns.filter(gender='M').order_by('final_time')[:10]
-    senior_runs_female = Run.seniorruns.filter(gender='F').order_by('final_time')[:10]
+    freshman_runs_male = Run.objects.raw("select * from crosscountry_run run where grade = '4' and gender = 'M' order by final_time asc  limit 10")
+    freshman_runs_female = Run.objects.raw("select * from crosscountry_run run where grade = '4' and gender = 'F' order by final_time asc  limit 10")
+    sophomore_runs_male = Run.objects.raw("select * from crosscountry_run run where grade = '3' and gender = 'M' order by final_time asc  limit 10")
+    sophomore_runs_female = Run.objects.raw("select * from crosscountry_run run where grade = '3' and gender = 'F' order by final_time asc  limit 10")
+    junior_runs_male = Run.objects.raw("select * from crosscountry_run run where grade = '2' and gender = 'M' order by final_time asc  limit 10")
+    junior_runs_female = Run.objects.raw("select * from crosscountry_run run where grade = '2' and gender = 'F' order by final_time asc  limit 10")
+    senior_runs_male = Run.objects.raw("select * from crosscountry_run run where grade = '1' and gender = 'M' order by final_time asc  limit 10")
+    senior_runs_female = Run.objects.raw("select * from crosscountry_run run where grade = '1' and gender = 'F' order by final_time asc  limit 10")
 
     #return render(request, 'summerrunning/summerrunning.html', {
     #        "latest": Entry.objects.all().order_by("-created_at")[:5],
