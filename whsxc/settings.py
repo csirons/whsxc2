@@ -37,8 +37,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "django.contrib.flatpages",
     "django.contrib.humanize",
-    "blog", 
+    "blog",
     "runners",
     "meets",
     "history",
@@ -47,7 +49,8 @@ INSTALLED_APPS = [
     "runninglinks",
     "summerrunning",
     "simplemenu",
-    "crosscountry",  # Custom app for cross country specific functionality
+    "crosscountry",
+
 ]
 
 MIDDLEWARE = [
@@ -58,6 +61,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.contrib.flatpages.middleware.FlatpageFallbackMiddleware",
 ]
 
 ROOT_URLCONF = "whsxc.urls"
@@ -131,3 +135,6 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Site ID for django.contrib.sites (required for flatpages)
+SITE_ID = 1
