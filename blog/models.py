@@ -20,11 +20,8 @@ class Entry(models.Model):
 
 	objects = EntryManager()
 
-	class Admin:
-		pass
-
 	def __str__(self):
-		return "%s" % self.title
+		return "%s: %s" % (self.created_at.date(), self.title)
 
 	def Meta(self):
 		ordering = ['-created_at']
