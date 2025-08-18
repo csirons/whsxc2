@@ -3,6 +3,7 @@ from django.contrib.admin import TabularInline
 from django.dispatch import dispatcher
 from django.db.models import signals
 #from crosscountry import signals as mysignals
+from django.utils import timezone
 
 #import urllib2 # thi s is for version 2.x
 import urllib # this is for version 3.x
@@ -188,8 +189,7 @@ class Meet(models.Model):
     return self.race_set.all()
 
   def past_tense(self):
-    #now = datetime.datetime.now()
-    now = datetime.datetime.now() - datetime.timedelta(hours=3)
+    now = timezone.now()
 
     return self.occurred_at < now
 
@@ -430,6 +430,15 @@ class Run(models.Model):
     self.course = self.meet.course
     self.occurred_at = self.meet.occurred_at
     self.grade = self.runner.year - self.occurred_at.year
+
+    if self.pr == None:
+        self.pr = False
+
+    if self.pr_course == None:
+        self.pr_course = False
+
+    if self.sb == None:
+        self.sb = False
 
     self.calc_rankings()
 
