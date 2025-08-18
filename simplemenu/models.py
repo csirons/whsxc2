@@ -8,7 +8,7 @@ class Menu(models.Model):
 	class Admin:
 		pass
 
-	def __unicode__(self):
+	def __str__(self):
 		return "%s" % self.name
 
 class MenuItem(models.Model):
@@ -24,6 +24,5 @@ class MenuItem(models.Model):
 	class Admin:
 		pass
 
-	def __unicode__(self):
+	def __str__(self):
 		return "%s - %s - %s" % (self.menu.name, self.sort, self.title)
-

@@ -68,7 +68,7 @@ class Runner(models.Model):
     list_filter = ['year','gender']
     search_fields = ['name']
 
-  def __unicode__(self):
+  def __str__(self):
     return "%s" % self.name
 
   def get_absolute_url(self):
@@ -122,7 +122,7 @@ class Course(models.Model):
   class Admin:
     list_display = ('name','address1','zip_code')
 
-  def __unicode__(self):
+  def __str__(self):
     return self.name
 
   def get_absolute_url(self):
@@ -181,7 +181,7 @@ class Meet(models.Model):
     ordering = ['-occurred_at']
     db_table = "crosscountry_meet"
 
-  def __unicode__(self):
+  def __str__(self):
     return u"%s (%s)" % (self.name, self.occurred_at.year)
 
   def get_absolute_url(self):
@@ -276,7 +276,7 @@ class Race(models.Model):
     date_hierarchy = 'occurred_at'
     js = [ '/media/javascript/convert_times.js' ]
 
-  def __unicode__(self):
+  def __str__(self):
     return "%s - %s" % (self.meet_name, TEAM_CHOICES_REVERSE[self.team])
 
   def sorted_runs(self):
@@ -357,7 +357,7 @@ class Run(models.Model):
   class Admin:
     pass
 
-  def __unicode__(self):
+  def __str__(self):
     return "Run for %s" % self.runner.name
 
   def calc_letter_points(self):
