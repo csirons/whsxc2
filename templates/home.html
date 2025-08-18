@@ -10,10 +10,4 @@
     {{ entry.text|safe|linebreaks }}
   {% endfor %}
 
-	<p class="blog-archives">
-	Full archives: 
-	{% for date in date_list reversed %}
-	<a href="blog/{{ date|date:"Y" }}.html">{{ date|date:"Y" }}</a>{% if not forloop.last %},{% endif %}
-	{% endfor %}
-	</p>
 {% endblock %}
