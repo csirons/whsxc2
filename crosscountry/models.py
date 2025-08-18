@@ -68,7 +68,7 @@ class Runner(models.Model):
     list_filter = ['year','gender']
     search_fields = ['name']
 
-  def __unicode__(self):
+  def __str__(self):
     return "%s" % self.name
 
   def get_absolute_url(self):
@@ -123,7 +123,10 @@ class Course(models.Model):
   class Admin:
     list_display = ('name','address1','zip_code')
 
-  def __unicode__(self):
+  def __str__(self):
+    return self.name
+
+  def __str__(self):
     return self.name
 
   def get_absolute_url(self):
@@ -264,7 +267,7 @@ class Race(models.Model):
 
     super(Race,self).save()
 
-  def __unicode__(self):
+  def __str__(self):
     return "%s - %s" % (self.meet_name, TEAM_CHOICES_REVERSE[self.team])
 
   def sorted_runs(self):
@@ -345,8 +348,8 @@ class Run(models.Model):
   class Admin:
     pass
 
-  def __unicode__(self):
-    return "Run for %s" % self.runner.name
+  def __str__(self):
+    return "%s Run for %s - %s" % (self.occurred_at, self.runner.name, self.race)
 
   def calc_letter_points(self):
     points = 0
