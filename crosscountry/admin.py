@@ -33,11 +33,11 @@ class RaceAdmin(admin.ModelAdmin):
 class RunnerAdmin(admin.ModelAdmin):
     list_display = ('name', 'year', 'gender')
     #list_filter = ['team','occurred_at','course_name']
-    list_filter = ['name', 'year', 'gender']
+    list_filter = ['year', 'gender']
     js = [ '/media/javascript/convert_times.js' ]
 
-    def save_model(self, request, race, form, change):
-         super().save_model(request, race, form, change)
+    def save_model(self, request, runner, form, change):
+         super().save_model(request, runner, form, change)
 
          for run in runner.run_set.order_by('id'):
            race = run.race
